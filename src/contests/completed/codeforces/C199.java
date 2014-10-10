@@ -1,66 +1,67 @@
 package contests.completed.codeforces;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
-public class C199
-{	
-	public void solve() throws IOException 
-	{
-		int r = nextInt();
-		int h = nextInt();
-		
-		int total = 0;
-		while(h >= r)
-		{
-			h -= r;
-			total += 2;
-		}
-		if(h >= (double) r / 2)
-			total++;
-		total++;
-		
-		System.out.println(total);
-	}
+public class C199 {
+  public void solve() throws IOException {
+    int r = nextInt();
+    int h = nextInt();
 
-	public BufferedReader br;
-	public StringTokenizer st;
-	public PrintWriter out;
+    int total = 0;
+    while (h >= r) {
+      h -= r;
+      total += 2;
+    }
+    if (h >= (double) r / 2)
+      total++;
+    total++;
 
-	public String nextToken() throws IOException {
-		while(st == null || !st.hasMoreTokens()) {
-			st = new StringTokenizer(br.readLine());
-		}
+    System.out.println(total);
+  }
 
-		return st.nextToken();
-	}
+  public BufferedReader br;
+  public StringTokenizer st;
+  public PrintWriter out;
 
-	public int nextInt() throws IOException {
-		return Integer.parseInt(nextToken());
-	}
+  public String nextToken() throws IOException {
+    while (st == null || !st.hasMoreTokens()) {
+      st = new StringTokenizer(br.readLine());
+    }
 
-	public long nextLong() throws  IOException {
-		return Long.parseLong(nextToken());
-	}
+    return st.nextToken();
+  }
 
-	public double nextDouble() throws IOException {
-		return Double.parseDouble(nextToken());
-	}
+  public int nextInt() throws IOException {
+    return Integer.parseInt(nextToken());
+  }
 
-	public void run() throws IOException 
-	{	
-		boolean oj = System.getProperty("ONLINE_JUDGE") != null;
-		oj = true;
-		br = new BufferedReader( new InputStreamReader( oj ? System.in : new FileInputStream("input.txt")));
-		out = new PrintWriter( oj ? System.out : new FileOutputStream("output.txt"));
+  public long nextLong() throws IOException {
+    return Long.parseLong(nextToken());
+  }
 
-		solve();
+  public double nextDouble() throws IOException {
+    return Double.parseDouble(nextToken());
+  }
 
-		out.close();
-	}
+  public void run() throws IOException {
+    boolean oj = System.getProperty("ONLINE_JUDGE") != null;
+    oj = true;
+    br = new BufferedReader(
+        new InputStreamReader(oj ? System.in : new FileInputStream("input.txt")));
+    out = new PrintWriter(oj ? System.out : new FileOutputStream("output.txt"));
 
-	public static void main(String[] args) throws IOException 
-	{
-		new C199().run();
-	}
+    solve();
+
+    out.close();
+  }
+
+  public static void main(String[] args) throws IOException {
+    new C199().run();
+  }
 }

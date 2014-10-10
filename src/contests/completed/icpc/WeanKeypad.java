@@ -1,30 +1,35 @@
 package contests.completed.icpc;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
-public class WeanKeypad
-{	
+public class WeanKeypad {
   public static class KMP {
     public static int search(String pattern, String text, int[] next) {
       int i, j;
+      @SuppressWarnings("unused")
       int count = 0;
       for (i = 0, j = 0; i < text.length(); i++) {
         while (j < pattern.length()) {
-        while (j >= 0 && text.charAt(i) != pattern.charAt(j)) {
-          j = next[j];
-        }
-        j++;
+          while (j >= 0 && text.charAt(i) != pattern.charAt(j)) {
+            j = next[j];
+          }
+          j++;
         }
         count++;
         j = 0;
       }
-      if (j == pattern.length()) return i - pattern.length();
+      if (j == pattern.length())
+        return i - pattern.length();
       return -1;
     }
 
-    public static int count(String pattern, String text)
-    {
+    public static int count(String pattern, String text) {
       int[] next = createTable(pattern);
       int count = 0;
       int offset = -1;
@@ -40,9 +45,12 @@ public class WeanKeypad
       int[] next = new int[pattern.length()];
       int j = -1;
       for (int i = 0; i < pattern.length(); i++) {
-        if (i == 0) next[i] = -1;
-        else if (pattern.charAt(i) != pattern.charAt(j)) next[i] = j;
-        else next[i] = next[j];
+        if (i == 0)
+          next[i] = -1;
+        else if (pattern.charAt(i) != pattern.charAt(j))
+          next[i] = j;
+        else
+          next[i] = next[j];
         while (j >= 0 && pattern.charAt(i) != pattern.charAt(j)) {
           j = next[j];
         }
@@ -51,12 +59,11 @@ public class WeanKeypad
       return next;
     }
   }
-  
-  public void solve() throws IOException 
-  {
+
+  public void solve() throws IOException {
     String A = nextLine();
     String B = nextLine();
-    
+
     System.out.println(KMP.count(B, A));
   }
 
@@ -65,7 +72,7 @@ public class WeanKeypad
   public PrintWriter out;
 
   public String nextToken() throws IOException {
-    while(st == null || !st.hasMoreTokens()) {
+    while (st == null || !st.hasMoreTokens()) {
       st = new StringTokenizer(br.readLine());
     }
 
@@ -80,7 +87,7 @@ public class WeanKeypad
     return Integer.parseInt(nextToken());
   }
 
-  public long nextLong() throws  IOException {
+  public long nextLong() throws IOException {
     return Long.parseLong(nextToken());
   }
 
@@ -88,18 +95,17 @@ public class WeanKeypad
     return Double.parseDouble(nextToken());
   }
 
-  public void run() throws IOException 
-  {	
+  public void run() throws IOException {
     boolean oj = System.getProperty("ONLINE_JUDGE") != null;
     oj = true;
-    br = new BufferedReader( new InputStreamReader( oj ? System.in : new FileInputStream("input.txt")));
-    out = new PrintWriter( oj ? System.out : new FileOutputStream("output.txt"));
+    br = new BufferedReader(
+        new InputStreamReader(oj ? System.in : new FileInputStream("input.txt")));
+    out = new PrintWriter(oj ? System.out : new FileOutputStream("output.txt"));
     solve();
     out.close();
   }
 
-  public static void main(String[] args) throws IOException 
-  {
+  public static void main(String[] args) throws IOException {
     new WeanKeypad().run();
   }
 }

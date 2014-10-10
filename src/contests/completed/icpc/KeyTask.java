@@ -1,15 +1,22 @@
 package contests.completed.icpc;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
-public class KeyTask
-{	
+public class KeyTask {
   public static final char LEFT = 'L';
   public static final char RIGHT = 'R';
   public static final char UP = 'U';
   public static final char DOWN = 'D';
-  public static final char[] DIRS = {LEFT, RIGHT, UP, DOWN};
+  public static final char[] DIRS = { LEFT, RIGHT, UP, DOWN };
 
   class State {
     public boolean blue = false;
@@ -28,11 +35,24 @@ public class KeyTask
 
     public State(State state, char dir) {
       switch (dir) {
-      case LEFT: this.row = state.row; this.col = state.col - 1; break;
-      case RIGHT: this.row = state.row; this.col = state.col + 1; break;
-      case UP: this.row = state.row - 1; this.col = state.col; break;
-      case DOWN: this.row = state.row + 1; this.col = state.col; break;
-      default: throw new RuntimeException("Invalid Direction");
+      case LEFT:
+        this.row = state.row;
+        this.col = state.col - 1;
+        break;
+      case RIGHT:
+        this.row = state.row;
+        this.col = state.col + 1;
+        break;
+      case UP:
+        this.row = state.row - 1;
+        this.col = state.col;
+        break;
+      case DOWN:
+        this.row = state.row + 1;
+        this.col = state.col;
+        break;
+      default:
+        throw new RuntimeException("Invalid Direction");
       }
       this.blue = state.blue;
       this.yellow = state.yellow;
@@ -47,20 +67,27 @@ public class KeyTask
   }
 
   public boolean canMove(State state, char dir, char[][] map) {
-    if ((state.row == 0 && dir == UP) || 
-        (state.row == map.length - 1 && dir == DOWN) || 
-        (state.col == 0 && dir == LEFT) || 
-        (state.col == map[0].length - 1 && dir == RIGHT)) {
+    if ((state.row == 0 && dir == UP) || (state.row == map.length - 1 && dir == DOWN)
+        || (state.col == 0 && dir == LEFT) || (state.col == map[0].length - 1 && dir == RIGHT)) {
       return false;
     }
     int row = state.row;
     int col = state.col;
     switch (dir) {
-    case LEFT: col--; break;
-    case RIGHT: col++; break;
-    case UP: row--; break;
-    case DOWN: row++; break;
-    default: throw new RuntimeException("Invalid direction");
+    case LEFT:
+      col--;
+      break;
+    case RIGHT:
+      col++;
+      break;
+    case UP:
+      row--;
+      break;
+    case DOWN:
+      row++;
+      break;
+    default:
+      throw new RuntimeException("Invalid direction");
     }
     char block = map[row][col];
     if (block == '#') {
@@ -84,16 +111,23 @@ public class KeyTask
     State newState = new State(state, dir);
     char block = map[newState.row][newState.col];
     switch (block) {
-    case 'b': newState.blue = true; break;
-    case 'y': newState.yellow = true; break;
-    case 'r': newState.red = true; break;
-    case 'g': newState.green = true; break;
+    case 'b':
+      newState.blue = true;
+      break;
+    case 'y':
+      newState.yellow = true;
+      break;
+    case 'r':
+      newState.red = true;
+      break;
+    case 'g':
+      newState.green = true;
+      break;
     }
     return newState;
   }
 
-  public void solve() throws IOException 
-  {
+  public void solve() throws IOException {
     int rows, cols;
     while ((rows = nextInt()) != 0 && (cols = nextInt()) != 0) {
       char[][] map = new char[rows][cols];
@@ -123,10 +157,10 @@ public class KeyTask
 
       boolean escape = false;
       search: {
-        while(bfs.size() > 0) {
+        while (bfs.size() > 0) {
           State cur = bfs.poll();
           Integer moves = dp.get(cur.hashString());
-          if (moves != null && moves == cur.moves) { 
+          if (moves != null && moves == cur.moves) {
             for (char dir : DIRS) {
               if (canMove(cur, dir, map)) {
                 State state = makeMove(cur, dir, map);
@@ -150,7 +184,6 @@ public class KeyTask
       }
     }
 
-
   }
 
   public BufferedReader br;
@@ -158,7 +191,7 @@ public class KeyTask
   public PrintWriter out;
 
   public String nextToken() throws IOException {
-    while(st == null || !st.hasMoreTokens()) {
+    while (st == null || !st.hasMoreTokens()) {
       st = new StringTokenizer(br.readLine());
     }
 
@@ -173,7 +206,7 @@ public class KeyTask
     return Integer.parseInt(nextToken());
   }
 
-  public long nextLong() throws  IOException {
+  public long nextLong() throws IOException {
     return Long.parseLong(nextToken());
   }
 
@@ -181,18 +214,17 @@ public class KeyTask
     return Double.parseDouble(nextToken());
   }
 
-  public void run() throws IOException 
-  {	
+  public void run() throws IOException {
     boolean oj = System.getProperty("ONLINE_JUDGE") != null;
     oj = true;
-    br = new BufferedReader( new InputStreamReader( oj ? System.in : new FileInputStream("input.txt")));
-    out = new PrintWriter( oj ? System.out : new FileOutputStream("output.txt"));
+    br = new BufferedReader(
+        new InputStreamReader(oj ? System.in : new FileInputStream("input.txt")));
+    out = new PrintWriter(oj ? System.out : new FileOutputStream("output.txt"));
     solve();
     out.close();
   }
 
-  public static void main(String[] args) throws IOException 
-  {
+  public static void main(String[] args) throws IOException {
     new KeyTask().run();
   }
 }

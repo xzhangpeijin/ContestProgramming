@@ -1,10 +1,14 @@
 package contests.completed.icpc;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
-public class StrangeBillboard
-{	
+public class StrangeBillboard {
   public int safeMod(int i) {
     i %= 2;
     if (i < 0) {
@@ -22,16 +26,16 @@ public class StrangeBillboard
         int k = C * i + j;
         M[k][k] = 1;
         if (i > 0) {
-          M[k][k-C] = 1;
+          M[k][k - C] = 1;
         }
-        if (i < R-1) {
-          M[k][k+C] = 1;
+        if (i < R - 1) {
+          M[k][k + C] = 1;
         }
         if (j > 0) {
-          M[k][k-1] = 1;
+          M[k][k - 1] = 1;
         }
-        if (j < C-1) {
-          M[k][k+1] = 1;
+        if (j < C - 1) {
+          M[k][k + 1] = 1;
         }
       }
     }
@@ -39,30 +43,30 @@ public class StrangeBillboard
   }
 
   public void swap(int v[], int i, int j) {
-    int temp = v[i]; 
-    v[i] = v[j]; 
+    int temp = v[i];
+    v[i] = v[j];
     v[j] = temp;
   }
 
   public void swapCols(int M[][], int i, int j) {
     for (int k = 0; k < M.length; k++) {
-      int temp = M[k][i]; 
-      M[k][i] = M[k][j]; 
+      int temp = M[k][i];
+      M[k][i] = M[k][j];
       M[k][j] = temp;
     }
   }
 
   public void swapRows(int M[][], int i, int j) {
     for (int k = 0; k < M[0].length; k++) {
-      int temp = M[i][k]; 
-      M[i][k] = M[j][k]; 
+      int temp = M[i][k];
+      M[i][k] = M[j][k];
       M[j][k] = temp;
     }
   }
 
   public int gauss(int M[][], int perm[], int y[]) {
     int K = M.length;
-    
+
     for (int p = 0; p < K; p++) {
       perm[p] = p;
     }
@@ -71,26 +75,32 @@ public class StrangeBillboard
       int c = p, r = p;
       while (c < K && M[r][c] == 0) {
         r++;
-        if (r >= K) { c++; r = p; }
+        if (r >= K) {
+          c++;
+          r = p;
+        }
       }
       if (c >= K) {
         return p;
       }
 
-      swapRows(M, r, p); 
+      swapRows(M, r, p);
       swap(y, r, p);
-      swapCols(M, c, p); 
+      swapCols(M, c, p);
       swap(perm, c, p);
 
-      int u = M[p][p]; M[p][p] = 1;
-      for (int q = p+1; q < K; q++) M[p][q] = safeMod(M[p][q] * u);
+      int u = M[p][p];
+      M[p][p] = 1;
+      for (int q = p + 1; q < K; q++)
+        M[p][q] = safeMod(M[p][q] * u);
       y[p] = safeMod(y[p] * u);
 
-      for (r = p+1; r < K; r++) {
-        int v = M[r][p]; 
-        if (v == 0) continue;
+      for (r = p + 1; r < K; r++) {
+        int v = M[r][p];
+        if (v == 0)
+          continue;
         M[r][p] = 0;
-        for (int q = p+1; q < K; q++) 
+        for (int q = p + 1; q < K; q++)
           M[r][q] = safeMod(M[r][q] - v * M[p][q]);
         y[r] = safeMod(y[r] - v * y[p]);
       }
@@ -100,9 +110,9 @@ public class StrangeBillboard
   }
 
   public void backSubst(int K, int M[][], int x[], int perm[], int y[], int rank) {
-    for (int p = rank-1; p >= 0; p--) {
+    for (int p = rank - 1; p >= 0; p--) {
       int u = y[p];
-      for (int q = p+1; q < K; q++) {
+      for (int q = p + 1; q < K; q++) {
         u = safeMod(u - M[p][q] * x[perm[q]]);
       }
       x[perm[p]] = u;
@@ -133,25 +143,24 @@ public class StrangeBillboard
     for (int i = rank; i < K; i++) {
       n *= 3;
     }
-    
+
     int min = Integer.MAX_VALUE;
 
     for (int s = 0; s < n; s++) {
       int x[] = new int[K];
       int k = s;
-      for (int i = K-1; i >= rank; i--) {
+      for (int i = K - 1; i >= rank; i--) {
         x[perm[i]] = k % 3;
         k /= 3;
       }
       backSubst(K, M, x, perm, y, rank);
       min = Math.min(min, count(x));
     }
-    
+
     return min;
   }
 
-  public void solve() throws IOException 
-  {
+  public void solve() throws IOException {
     int r, c;
     while ((r = nextInt()) != 0 && (c = nextInt()) != 0) {
       int[] input = new int[r * c];
@@ -163,7 +172,7 @@ public class StrangeBillboard
           index++;
         }
       }
-      
+
       int sol = solve(r, c, input);
       if (sol == -1) {
         System.out.println("Damaged billboard.");
@@ -178,7 +187,7 @@ public class StrangeBillboard
   public PrintWriter out;
 
   public String nextToken() throws IOException {
-    while(st == null || !st.hasMoreTokens()) {
+    while (st == null || !st.hasMoreTokens()) {
       st = new StringTokenizer(br.readLine());
     }
 
@@ -193,7 +202,7 @@ public class StrangeBillboard
     return Integer.parseInt(nextToken());
   }
 
-  public long nextLong() throws  IOException {
+  public long nextLong() throws IOException {
     return Long.parseLong(nextToken());
   }
 
@@ -201,18 +210,17 @@ public class StrangeBillboard
     return Double.parseDouble(nextToken());
   }
 
-  public void run() throws IOException 
-  {	
+  public void run() throws IOException {
     boolean oj = System.getProperty("ONLINE_JUDGE") != null;
     oj = true;
-    br = new BufferedReader( new InputStreamReader( oj ? System.in : new FileInputStream("input.txt")));
-    out = new PrintWriter( oj ? System.out : new FileOutputStream("output.txt"));
+    br = new BufferedReader(
+        new InputStreamReader(oj ? System.in : new FileInputStream("input.txt")));
+    out = new PrintWriter(oj ? System.out : new FileOutputStream("output.txt"));
     solve();
     out.close();
   }
 
-  public static void main(String[] args) throws IOException 
-  {
+  public static void main(String[] args) throws IOException {
     new StrangeBillboard().run();
   }
 }

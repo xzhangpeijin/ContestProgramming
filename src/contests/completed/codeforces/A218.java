@@ -1,65 +1,67 @@
 package contests.completed.codeforces;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
-public class A218
-{	
-	public void solve() throws IOException 
-	{
-		int n = nextInt();
-		int k = nextInt();
-		
-		int[] counts = new int[k];
-		for(int x = 0; x < n; x++)
-			counts[x % k] += 2 - nextInt();
-		
-		int change = 0;
-		for(int x = 0; x < k; x++)
-			change += Math.min(counts[x], n / k - counts[x]);
-		System.out.println(change);
-	}
+public class A218 {
+  public void solve() throws IOException {
+    int n = nextInt();
+    int k = nextInt();
 
-	public BufferedReader br;
-	public StringTokenizer st;
-	public PrintWriter out;
+    int[] counts = new int[k];
+    for (int x = 0; x < n; x++)
+      counts[x % k] += 2 - nextInt();
 
-	public String nextToken() throws IOException {
-		while(st == null || !st.hasMoreTokens()) {
-			st = new StringTokenizer(br.readLine());
-		}
+    int change = 0;
+    for (int x = 0; x < k; x++)
+      change += Math.min(counts[x], n / k - counts[x]);
+    System.out.println(change);
+  }
 
-		return st.nextToken();
-	}
-	
-	public String nextLine() throws IOException {
-		return br.readLine();
-	}
+  public BufferedReader br;
+  public StringTokenizer st;
+  public PrintWriter out;
 
-	public int nextInt() throws IOException {
-		return Integer.parseInt(nextToken());
-	}
+  public String nextToken() throws IOException {
+    while (st == null || !st.hasMoreTokens()) {
+      st = new StringTokenizer(br.readLine());
+    }
 
-	public long nextLong() throws  IOException {
-		return Long.parseLong(nextToken());
-	}
+    return st.nextToken();
+  }
 
-	public double nextDouble() throws IOException {
-		return Double.parseDouble(nextToken());
-	}
+  public String nextLine() throws IOException {
+    return br.readLine();
+  }
 
-	public void run() throws IOException 
-	{	
-		boolean oj = System.getProperty("ONLINE_JUDGE") != null;
-		oj = true;
-		br = new BufferedReader( new InputStreamReader( oj ? System.in : new FileInputStream("input.txt")));
-		out = new PrintWriter( oj ? System.out : new FileOutputStream("output.txt"));
-		solve();
-		out.close();
-	}
+  public int nextInt() throws IOException {
+    return Integer.parseInt(nextToken());
+  }
 
-	public static void main(String[] args) throws IOException 
-	{
-		new A218().run();
-	}
+  public long nextLong() throws IOException {
+    return Long.parseLong(nextToken());
+  }
+
+  public double nextDouble() throws IOException {
+    return Double.parseDouble(nextToken());
+  }
+
+  public void run() throws IOException {
+    boolean oj = System.getProperty("ONLINE_JUDGE") != null;
+    oj = true;
+    br = new BufferedReader(
+        new InputStreamReader(oj ? System.in : new FileInputStream("input.txt")));
+    out = new PrintWriter(oj ? System.out : new FileOutputStream("output.txt"));
+    solve();
+    out.close();
+  }
+
+  public static void main(String[] args) throws IOException {
+    new A218().run();
+  }
 }

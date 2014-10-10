@@ -1,18 +1,21 @@
 package contests.completed.icpc;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
-public class HouseCleaning
-{	
+public class HouseCleaning {
   public static final char LEFT = 'L';
   public static final char RIGHT = 'R';
   public static final char UP = 'U';
   public static final char DOWN = 'D';
-  public static final char[] DIRS = {LEFT, RIGHT, UP, DOWN};
+  public static final char[] DIRS = { LEFT, RIGHT, UP, DOWN };
 
-  public void solve() throws IOException 
-  {
+  public void solve() throws IOException {
     int cols = nextInt();
     int rows = nextInt();
     int[][] heights = new int[rows][cols];
@@ -26,7 +29,7 @@ public class HouseCleaning
 
     int numfill = 1;
     int energy = 0;
-    while(numfill != rows * cols) {
+    while (numfill != rows * cols) {
       int moverow = -1;
       int movecol = -1;
       int min = Integer.MAX_VALUE;
@@ -35,20 +38,27 @@ public class HouseCleaning
         for (int y = 0; y < cols; y++) {
           if (filled[x][y]) {
             for (char dir : DIRS) {
-              if ((x == 0 && dir == UP) || 
-                  (x == rows - 1 && dir == DOWN) || 
-                  (y == 0 && dir == LEFT) || 
-                  (y == cols - 1 && dir == RIGHT)) {
+              if ((x == 0 && dir == UP) || (x == rows - 1 && dir == DOWN)
+                  || (y == 0 && dir == LEFT) || (y == cols - 1 && dir == RIGHT)) {
                 continue;
               }
               int row = x;
               int col = y;
               switch (dir) {
-              case LEFT: col--; break;
-              case RIGHT: col++; break;
-              case UP: row--; break;
-              case DOWN: row++; break;
-              default: throw new RuntimeException("Invalid direction");
+              case LEFT:
+                col--;
+                break;
+              case RIGHT:
+                col++;
+                break;
+              case UP:
+                row--;
+                break;
+              case DOWN:
+                row++;
+                break;
+              default:
+                throw new RuntimeException("Invalid direction");
               }
               if (!filled[row][col]) {
                 int curmin = Math.min(heights[x][y], heights[row][col]);
@@ -80,7 +90,7 @@ public class HouseCleaning
   public PrintWriter out;
 
   public String nextToken() throws IOException {
-    while(st == null || !st.hasMoreTokens()) {
+    while (st == null || !st.hasMoreTokens()) {
       st = new StringTokenizer(br.readLine());
     }
 
@@ -95,7 +105,7 @@ public class HouseCleaning
     return Integer.parseInt(nextToken());
   }
 
-  public long nextLong() throws  IOException {
+  public long nextLong() throws IOException {
     return Long.parseLong(nextToken());
   }
 
@@ -103,18 +113,17 @@ public class HouseCleaning
     return Double.parseDouble(nextToken());
   }
 
-  public void run() throws IOException 
-  {	
+  public void run() throws IOException {
     boolean oj = System.getProperty("ONLINE_JUDGE") != null;
     oj = true;
-    br = new BufferedReader( new InputStreamReader( oj ? System.in : new FileInputStream("input.txt")));
-    out = new PrintWriter( oj ? System.out : new FileOutputStream("output.txt"));
+    br = new BufferedReader(
+        new InputStreamReader(oj ? System.in : new FileInputStream("input.txt")));
+    out = new PrintWriter(oj ? System.out : new FileOutputStream("output.txt"));
     solve();
     out.close();
   }
 
-  public static void main(String[] args) throws IOException 
-  {
+  public static void main(String[] args) throws IOException {
     new HouseCleaning().run();
   }
 }

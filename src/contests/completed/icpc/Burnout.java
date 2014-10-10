@@ -1,4 +1,4 @@
-package contests.completed.codeforces;
+package contests.completed.icpc;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -6,40 +6,38 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.StringTokenizer;
 
-public class A204 {
-  public void solve() throws IOException {
-    int zeroes = 0;
-    int fives = 0;
-    int n = nextInt();
-    int[] arr = new int[n];
-    for (int x = 0; x < n; x++) {
-      arr[x] = nextInt();
-      if (arr[x] == 0)
-        zeroes++;
-      else
-        fives++;
+public class Burnout {
+
+  public static class Pattern {
+    public boolean flip;
+    public long offtime;
+    public long ontime;
+    public long length;
+    public List<Pattern> subpattern = new LinkedList<Pattern>();
+
+    public static Pattern parsePattern(String input) {
+      return new Pattern();
     }
-    Arrays.sort(arr);
+  }
 
-    char[] beg = new char[fives - (fives % 9)];
-    for (int x = 0; x < beg.length; x++)
-      beg[x] = '5';
-
-    char[] end = new char[zeroes];
-    for (int x = 0; x < zeroes; x++)
-      end[x] = '0';
-
-    String ans = new String(beg) + new String(end);
-    if (beg.length == 0)
-      ans = "0";
-    if (zeroes == 0)
-      ans = "-1";
-
-    System.out.println(ans);
-
+  public void solve() throws IOException {
+    // long n;
+    // while ((n = nextLong()) != 0)
+    // {
+    // String input = nextLine();
+    // Pattern pattern = Pattern.parsePattern(input);
+    // boolean on = true;
+    // long old = -1;
+    // long elapsed = 0;
+    // while (elapsed < n)
+    // {
+    // elapsed++;
+    // }
+    // }
   }
 
   public BufferedReader br;
@@ -52,6 +50,10 @@ public class A204 {
     }
 
     return st.nextToken();
+  }
+
+  public String nextLine() throws IOException {
+    return br.readLine();
   }
 
   public int nextInt() throws IOException {
@@ -77,6 +79,6 @@ public class A204 {
   }
 
   public static void main(String[] args) throws IOException {
-    new A204().run();
+    new Burnout().run();
   }
 }

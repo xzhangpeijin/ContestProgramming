@@ -1,178 +1,155 @@
 package contests.completed.icpc;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.StringTokenizer;
 
-public class ACM1
-{	
-	public void solve() throws IOException 
-	{
-		boolean start = true;
-		while(start)
-		{
-			int numteams = nextInt();
-			int a = nextInt();
-			int b = nextInt();
-			if(numteams == 0 && a == 0 && b == 0)
-			{
-				start = false;
-				break;
-			}
-			
-			ArrayList<Team> teams = new ArrayList<Team>();
-			for(int x = 0; x < numteams; x++)
-			{
-				teams.add(new Team(nextInt(), nextInt(), nextInt()));
-			}
-			Collections.sort(teams);
-			
-//			for(int x = 0; x < numteams; x++)
-//				System.out.println(teams.get(x).dista + " " + teams.get(x).distb);
-//			
-			Team rec = null;
-			boolean ig = false;
-			
-			int total = 0;
-			while(teams.size() > 0)
-			{
-				Team temp = teams.remove(0);
-				if(rec != null && rec == temp)
-					ig = true;
-				if(a != 0 && b != 0)
-				{
-					if(ig || temp.dista < temp.distb)
-					{
-						if(a >= temp.needed)
-						{
-							a -= temp.needed;
-							total += temp.needed * temp.dista;
-						}
-						else
-						{
-							temp.needed -= a;
-							b -= temp.needed;
-							total += a * temp.dista + temp.needed * temp.distb;
-							a = 0;
-						}
-						if(a == 0)
-							Collections.sort(teams, new SortB());
-					}
-					else if(temp.distb < temp.dista)
-					{
-						if(b >= temp.needed)
-						{
-							b -= temp.needed;
-							total += temp.needed * temp.distb;
-						}
-						else
-						{
-							temp.needed -= b;
-							a -= temp.needed;
-							total += b * temp.distb + temp.needed * temp.dista;
-							b = 0;
-						}
-						if(b == 0)
-							Collections.sort(teams, new SortA());
-					}
-					else
-					{
-						if(rec == null)
-							rec = temp;
-						teams.add(temp);
-					}
-				}
-				else
-				{
-					if(a == 0)
-					{
-						b -= temp.needed;
-						total += temp.needed * temp.distb;
-					}
-					else if(b == 0)
-					{
-						a -= temp.needed;
-						total += temp.needed * temp.dista;
-					}
-				}
-			}
-			System.out.println(total);
-		}
-	}
-	
-	public class SortA implements Comparator<Team>
-	{
-		public int compare(Team arg0, Team arg1)
-		{
-			return arg0.dista - arg1.dista;
-		}	
-	}
+public class ACM1 {
+  public void solve() throws IOException {
+    boolean start = true;
+    while (start) {
+      int numteams = nextInt();
+      int a = nextInt();
+      int b = nextInt();
+      if (numteams == 0 && a == 0 && b == 0) {
+        start = false;
+        break;
+      }
 
-	public class SortB implements Comparator<Team>
-	{
-		public int compare(Team arg0, Team arg1)
-		{
-			return arg0.distb - arg1.distb;
-		}	
-	}
+      ArrayList<Team> teams = new ArrayList<Team>();
+      for (int x = 0; x < numteams; x++) {
+        teams.add(new Team(nextInt(), nextInt(), nextInt()));
+      }
+      Collections.sort(teams);
 
-	public class Team implements Comparable<Team>
-	{
-		public int needed;
-		public int dista;
-		public int distb;
+      // for(int x = 0; x < numteams; x++)
+      // System.out.println(teams.get(x).dista + " " + teams.get(x).distb);
+      //
+      Team rec = null;
+      boolean ig = false;
 
-		public Team(int needed, int dista, int distb)
-		{
-			this.needed = needed;
-			this.dista = dista;
-			this.distb = distb;
-		}
+      int total = 0;
+      while (teams.size() > 0) {
+        Team temp = teams.remove(0);
+        if (rec != null && rec == temp)
+          ig = true;
+        if (a != 0 && b != 0) {
+          if (ig || temp.dista < temp.distb) {
+            if (a >= temp.needed) {
+              a -= temp.needed;
+              total += temp.needed * temp.dista;
+            } else {
+              temp.needed -= a;
+              b -= temp.needed;
+              total += a * temp.dista + temp.needed * temp.distb;
+              a = 0;
+            }
+            if (a == 0)
+              Collections.sort(teams, new SortB());
+          } else if (temp.distb < temp.dista) {
+            if (b >= temp.needed) {
+              b -= temp.needed;
+              total += temp.needed * temp.distb;
+            } else {
+              temp.needed -= b;
+              a -= temp.needed;
+              total += b * temp.distb + temp.needed * temp.dista;
+              b = 0;
+            }
+            if (b == 0)
+              Collections.sort(teams, new SortA());
+          } else {
+            if (rec == null)
+              rec = temp;
+            teams.add(temp);
+          }
+        } else {
+          if (a == 0) {
+            b -= temp.needed;
+            total += temp.needed * temp.distb;
+          } else if (b == 0) {
+            a -= temp.needed;
+            total += temp.needed * temp.dista;
+          }
+        }
+      }
+      System.out.println(total);
+    }
+  }
 
-		public int compareTo(Team a)
-		{
-			int result = -1 * Math.abs(dista - distb) + Math.abs(a.dista - a.distb);
-				return result;
-		}
-	}
+  public class SortA implements Comparator<Team> {
+    public int compare(Team arg0, Team arg1) {
+      return arg0.dista - arg1.dista;
+    }
+  }
 
-	public BufferedReader br;
-	public StringTokenizer st;
-	public PrintWriter out;
+  public class SortB implements Comparator<Team> {
+    public int compare(Team arg0, Team arg1) {
+      return arg0.distb - arg1.distb;
+    }
+  }
 
-	public String nextToken() throws IOException {
-		while(st == null || !st.hasMoreTokens()) {
-			st = new StringTokenizer(br.readLine());
-		}
+  public class Team implements Comparable<Team> {
+    public int needed;
+    public int dista;
+    public int distb;
 
-		return st.nextToken();
-	}
+    public Team(int needed, int dista, int distb) {
+      this.needed = needed;
+      this.dista = dista;
+      this.distb = distb;
+    }
 
-	public int nextInt() throws IOException {
-		return Integer.parseInt(nextToken());
-	}
+    public int compareTo(Team a) {
+      int result = -1 * Math.abs(dista - distb) + Math.abs(a.dista - a.distb);
+      return result;
+    }
+  }
 
-	public long nextLong() throws  IOException {
-		return Long.parseLong(nextToken());
-	}
+  public BufferedReader br;
+  public StringTokenizer st;
+  public PrintWriter out;
 
-	public double nextDouble() throws IOException {
-		return Double.parseDouble(nextToken());
-	}
+  public String nextToken() throws IOException {
+    while (st == null || !st.hasMoreTokens()) {
+      st = new StringTokenizer(br.readLine());
+    }
 
-	public void run() throws IOException 
-	{	
-		boolean oj = System.getProperty("ONLINE_JUDGE") != null;
-		oj = true;
-		br = new BufferedReader( new InputStreamReader( oj ? System.in : new FileInputStream("input.txt")));
-		out = new PrintWriter( oj ? System.out : new FileOutputStream("output.txt"));
+    return st.nextToken();
+  }
 
-		solve();
+  public int nextInt() throws IOException {
+    return Integer.parseInt(nextToken());
+  }
 
-		out.close();
-	}
+  public long nextLong() throws IOException {
+    return Long.parseLong(nextToken());
+  }
 
-	public static void main(String[] args) throws IOException 
-	{
-		new ACM1().run();
-	}
+  public double nextDouble() throws IOException {
+    return Double.parseDouble(nextToken());
+  }
+
+  public void run() throws IOException {
+    boolean oj = System.getProperty("ONLINE_JUDGE") != null;
+    oj = true;
+    br = new BufferedReader(
+        new InputStreamReader(oj ? System.in : new FileInputStream("input.txt")));
+    out = new PrintWriter(oj ? System.out : new FileOutputStream("output.txt"));
+
+    solve();
+
+    out.close();
+  }
+
+  public static void main(String[] args) throws IOException {
+    new ACM1().run();
+  }
 }

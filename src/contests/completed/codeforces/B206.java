@@ -1,84 +1,84 @@
 package contests.completed.codeforces;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
-public class B206
-{	
-	public void solve() throws IOException 
-	{
-		int[] c = new int[4];
-		for(int x = 0; x < 4; x++)
-			c[x] = nextInt();
-		int n = nextInt();
-		int m = nextInt();
-		
-		int total = 0;
-		int cost = 0;
-		for(int x = 0; x < n; x++)
-		{
-			int a = nextInt();
-			if(a * c[0] > c[1])
-				cost += c[1];
-			else
-				cost += a * c[0];
-		}
-		if(cost > c[2])
-			cost = c[2];
-		total += cost;
-		cost = 0;
-		for(int x = 0; x < m; x++)
-		{
-			int a = nextInt();
-			if(a * c[0] > c[1])
-				cost += c[1];
-			else
-				cost += a * c[0];
-		}
-		if(cost > c[2])
-			cost = c[2];
-		total += cost;
-		if(total > c[3])
-			total = c[3];
-		System.out.println(total);
-	}
+public class B206 {
+  public void solve() throws IOException {
+    int[] c = new int[4];
+    for (int x = 0; x < 4; x++)
+      c[x] = nextInt();
+    int n = nextInt();
+    int m = nextInt();
 
-	public BufferedReader br;
-	public StringTokenizer st;
-	public PrintWriter out;
+    int total = 0;
+    int cost = 0;
+    for (int x = 0; x < n; x++) {
+      int a = nextInt();
+      if (a * c[0] > c[1])
+        cost += c[1];
+      else
+        cost += a * c[0];
+    }
+    if (cost > c[2])
+      cost = c[2];
+    total += cost;
+    cost = 0;
+    for (int x = 0; x < m; x++) {
+      int a = nextInt();
+      if (a * c[0] > c[1])
+        cost += c[1];
+      else
+        cost += a * c[0];
+    }
+    if (cost > c[2])
+      cost = c[2];
+    total += cost;
+    if (total > c[3])
+      total = c[3];
+    System.out.println(total);
+  }
 
-	public String nextToken() throws IOException {
-		while(st == null || !st.hasMoreTokens()) {
-			st = new StringTokenizer(br.readLine());
-		}
+  public BufferedReader br;
+  public StringTokenizer st;
+  public PrintWriter out;
 
-		return st.nextToken();
-	}
+  public String nextToken() throws IOException {
+    while (st == null || !st.hasMoreTokens()) {
+      st = new StringTokenizer(br.readLine());
+    }
 
-	public int nextInt() throws IOException {
-		return Integer.parseInt(nextToken());
-	}
+    return st.nextToken();
+  }
 
-	public long nextLong() throws  IOException {
-		return Long.parseLong(nextToken());
-	}
+  public int nextInt() throws IOException {
+    return Integer.parseInt(nextToken());
+  }
 
-	public double nextDouble() throws IOException {
-		return Double.parseDouble(nextToken());
-	}
+  public long nextLong() throws IOException {
+    return Long.parseLong(nextToken());
+  }
 
-	public void run() throws IOException 
-	{	
-		boolean oj = System.getProperty("ONLINE_JUDGE") != null;
-		oj = true;
-		br = new BufferedReader( new InputStreamReader( oj ? System.in : new FileInputStream("input.txt")));
-		out = new PrintWriter( oj ? System.out : new FileOutputStream("output.txt"));
-		solve();
-		out.close();
-	}
+  public double nextDouble() throws IOException {
+    return Double.parseDouble(nextToken());
+  }
 
-	public static void main(String[] args) throws IOException 
-	{
-		new B206().run();
-	}
+  public void run() throws IOException {
+    boolean oj = System.getProperty("ONLINE_JUDGE") != null;
+    oj = true;
+    br = new BufferedReader(
+        new InputStreamReader(oj ? System.in : new FileInputStream("input.txt")));
+    out = new PrintWriter(oj ? System.out : new FileOutputStream("output.txt"));
+    solve();
+    out.close();
+  }
+
+  public static void main(String[] args) throws IOException {
+    new B206().run();
+  }
 }

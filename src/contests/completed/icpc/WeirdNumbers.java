@@ -1,12 +1,15 @@
 package contests.completed.icpc;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
-public class WeirdNumbers
-{	
-  public void solve() throws IOException 
-  {
+public class WeirdNumbers {
+  public void solve() throws IOException {
     String nextline;
     while (!(nextline = nextLine()).equals("end")) {
       String[] line = nextline.split(" ");
@@ -18,7 +21,7 @@ public class WeirdNumbers
 
       if (command.equals("to")) {
         int num = Integer.parseInt(number);
-        
+
         StringBuilder ans = new StringBuilder();
         do {
           int mod = num % radix;
@@ -47,7 +50,7 @@ public class WeirdNumbers
   public PrintWriter out;
 
   public String nextToken() throws IOException {
-    while(st == null || !st.hasMoreTokens()) {
+    while (st == null || !st.hasMoreTokens()) {
       st = new StringTokenizer(br.readLine());
     }
 
@@ -62,7 +65,7 @@ public class WeirdNumbers
     return Integer.parseInt(nextToken());
   }
 
-  public long nextLong() throws  IOException {
+  public long nextLong() throws IOException {
     return Long.parseLong(nextToken());
   }
 
@@ -70,18 +73,17 @@ public class WeirdNumbers
     return Double.parseDouble(nextToken());
   }
 
-  public void run() throws IOException 
-  {	
+  public void run() throws IOException {
     boolean oj = System.getProperty("ONLINE_JUDGE") != null;
     oj = true;
-    br = new BufferedReader( new InputStreamReader( oj ? System.in : new FileInputStream("input.txt")));
-    out = new PrintWriter( oj ? System.out : new FileOutputStream("output.txt"));
+    br = new BufferedReader(
+        new InputStreamReader(oj ? System.in : new FileInputStream("input.txt")));
+    out = new PrintWriter(oj ? System.out : new FileOutputStream("output.txt"));
     solve();
     out.close();
   }
 
-  public static void main(String[] args) throws IOException 
-  {
+  public static void main(String[] args) throws IOException {
     new WeirdNumbers().run();
   }
 }
