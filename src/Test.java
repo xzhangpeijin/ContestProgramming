@@ -1,4 +1,4 @@
-package contests.current;
+
 
 public class Test {
   public Test() {

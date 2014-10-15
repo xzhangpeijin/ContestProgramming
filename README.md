@@ -9,4 +9,6 @@ Contest labelings should be self explanatory.
 `completed.icpc` are solutions to ACM ICPC problems. 
 Contest labelings are unknown but problem names should be unique.
 
+default package contains template files
+
 Disclaimer: Not all files in the completed package are necessarily complete or correct solutions
