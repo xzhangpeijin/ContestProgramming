@@ -1,3 +1,4 @@
+package contests.completed.icpc;
 
 
 import java.io.BufferedReader;
