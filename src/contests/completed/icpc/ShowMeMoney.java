@@ -2,11 +2,14 @@ package contests.completed.icpc;
 
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -17,7 +20,10 @@ import java.util.StringTokenizer;
 
 /** 
  * DOESNT WORK FOR SOME REASON
+ * 
+ * Doesn't work becuase of double precision need to change to BigDecimal to get solution
  */
+@SuppressWarnings("unused")
 public class ShowMeMoney {
 
   class Exchange {
@@ -100,6 +106,8 @@ public class ShowMeMoney {
           double rate = search(curind, currency.getValue());
           if (rate != 0) {
             int needed = Math.min((int) Math.ceil(target * rate), 100000);
+            System.out.println(needed);
+            System.out.println(needed / rate);
             if (needed / rate >= target) {
               double diff = needed / rate - (double) target;          
               if (diff < min) {
@@ -126,11 +134,16 @@ public class ShowMeMoney {
   public void solve() throws IOException {
     int n;
     int num = 0;
+    ArrayList<ArrayList<String>> input = new ArrayList<ArrayList<String>>();
+    ArrayList<String> output = new ArrayList<String>();
     while ((n = nextInt()) != 0) {
+      ArrayList<String> test = new ArrayList<String>();
+      test.add(String.valueOf(n));
       num++;
       Exchange exchange = new Exchange();
       for (int x = 0; x < n; x++) {
         String[] in = nextLine().split(" = ");
+        test.add(in[0] + " = " + in[1]);
         String[] cur1 = in[0].split(" ");
         String[] cur2 = in[1].split(" ");
         exchange.addExchange(cur1[1], Integer.parseInt(cur1[0]),
@@ -138,9 +151,29 @@ public class ShowMeMoney {
       }
       String quan = nextToken();
       String cur = nextToken();
+      test.add(quan + " " + cur);
       String max = exchange.exchange(cur, Integer.parseInt(quan));
-      System.out.format("Case %d: %s%n", num, max);
+      String result = String.format("Case %d: %s", num, max);
+      output.add(result);
+      input.add(test);
+      System.out.println(result);
     }
+    
+//    BufferedReader br = new BufferedReader(new FileReader(new File("/Users/Peijin/Downloads/G.out")));
+//    String nextline;
+//    int index = 0;
+//    while ((nextline = br.readLine()) != null) {
+//      if (!output.get(index).equals(nextline)) {
+//        for (String line : input.get(index)) {
+//          System.out.println(line);
+//        }
+//        System.out.println("Correct: " + nextline);
+//        System.out.println("Mine: " + output.get(index));
+//        System.out.println(output.get(index).compareTo(nextline));
+//      }
+//      index++;
+//    }
+//    br.close();
   }
 
   public BufferedReader br;
