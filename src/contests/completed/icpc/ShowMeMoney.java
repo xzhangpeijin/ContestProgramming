@@ -1,11 +1,8 @@
 package contests.completed.icpc;
 
-
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -22,8 +19,11 @@ import java.util.StringTokenizer;
  * DOESNT WORK FOR SOME REASON
  * 
  * Doesn't work becuase of double precision need to change to BigDecimal to get solution
+ * 
+ * Did some hacking to deal with decimal precision
+ * 
+ * WORKS NOW
  */
-@SuppressWarnings("unused")
 public class ShowMeMoney {
 
   class Exchange {
@@ -105,11 +105,9 @@ public class ShowMeMoney {
         if (!currency.getKey().equals(cur)) {
           double rate = search(curind, currency.getValue());
           if (rate != 0) {
-            int needed = Math.min((int) Math.ceil(target * rate), 100000);
-            System.out.println(needed);
-            System.out.println(needed / rate);
-            if (needed / rate >= target) {
-              double diff = needed / rate - (double) target;          
+            int needed = Math.min((int) Math.ceil(target * rate - 0.0001), 100000);
+            if (needed / rate + 0.0001 >= target) {
+              double diff = needed / rate - (double) target + 0.0001;          
               if (diff < min) {
                 min = diff;
                 result = needed + " " + currency.getKey();
@@ -158,10 +156,11 @@ public class ShowMeMoney {
       input.add(test);
       System.out.println(result);
     }
-    
+
 //    BufferedReader br = new BufferedReader(new FileReader(new File("/Users/Peijin/Downloads/G.out")));
 //    String nextline;
 //    int index = 0;
+//    int count = 0;
 //    while ((nextline = br.readLine()) != null) {
 //      if (!output.get(index).equals(nextline)) {
 //        for (String line : input.get(index)) {
@@ -169,11 +168,12 @@ public class ShowMeMoney {
 //        }
 //        System.out.println("Correct: " + nextline);
 //        System.out.println("Mine: " + output.get(index));
-//        System.out.println(output.get(index).compareTo(nextline));
+//        count++;
 //      }
 //      index++;
 //    }
 //    br.close();
+//    System.out.println(count);
   }
 
   public BufferedReader br;
