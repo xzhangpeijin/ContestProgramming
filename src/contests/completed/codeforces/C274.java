@@ -1,3 +1,4 @@
+package contests.completed.codeforces;
 
 
 import java.io.BufferedReader;
@@ -8,10 +9,55 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
-public class Template {
-  
-  public void solve() throws IOException {
+public class C274 {
 
+  public void solve() throws IOException {
+    int n = nextInt();
+    int a = nextInt();
+    int b = nextInt();
+    int k = nextInt();
+
+    if (a > b) {
+      a = n - a + 1;
+      b = n - b + 1;
+    }
+
+    long[] counts = new long[b];
+    counts[a] = 1;
+
+    long oldtot = 1;
+    for (int i = 0; i < k; i++) {
+      //System.out.println(oldtot);
+      long[] newcounts = new long[b];
+      newcounts[b - 1] = (oldtot - counts[b - 1]) % 1000000007;
+      long tot = newcounts[b - 1];
+      int floors = 0;
+      for (int x = b - 2; x >= 1; x--) {
+        if (floors % 2 == 0) {
+          newcounts[x] = newcounts[x + 1] - counts[x];
+          newcounts[x] -= counts[x + (floors/2) + 1];
+          newcounts[x] += counts[x + 1];
+        } else {
+          newcounts[x] = newcounts[x + 1] - counts[x] + counts[x + 1];
+        }
+        
+        floors++;
+        newcounts[x] %= 1000000007;
+        if (newcounts[x] < 0) {
+          newcounts[x] += 1000000007;
+        }
+        tot += newcounts[x];
+      }
+      oldtot = tot;
+      
+      counts = newcounts;
+    }
+
+//    for (int x = 1; x < b; x++) {
+//      System.out.println(x + " " + counts[x]);
+//    }
+
+    System.out.println(oldtot % 1000000007);
   }
 
   public BufferedReader br;
@@ -53,6 +99,6 @@ public class Template {
   }
 
   public static void main(String[] args) throws IOException {
-    new Template().run();
+    new C274().run();
   }
 }

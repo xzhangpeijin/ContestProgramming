@@ -1,3 +1,4 @@
+package contests.completed.codeforces;
 
 
 import java.io.BufferedReader;
@@ -6,12 +7,46 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Template {
+public class A274 {
+  class Test implements Comparable<Test> {
+    public int a;
+    public int b;
+    
+    public Test(int a, int b) {
+      this.a = a;
+      this.b = b;
+    }
+    
+    public int compareTo(Test test) {
+      if (a == test.a) {
+        return b - test.b;
+      } else {
+        return a - test.a;
+      }
+    }
+  }
   
   public void solve() throws IOException {
-
+    int n = nextInt();
+    Test[] tests = new Test[n];
+    
+    for (int x = 0; x < n; x++) {
+      tests[x] = new Test(nextInt(), nextInt());
+    }
+    Arrays.sort(tests);
+    
+    int day = 1;
+    for (int x = 0; x < n; x++) {
+      if (tests[x].b >= day) {
+        day = tests[x].b;
+      } else {
+        day = tests[x].a;
+      }
+    }
+    System.out.println(day);
   }
 
   public BufferedReader br;
@@ -53,6 +88,6 @@ public class Template {
   }
 
   public static void main(String[] args) throws IOException {
-    new Template().run();
+    new A274().run();
   }
 }
