@@ -1,0 +1,83 @@
+package contests.completed.icpc;
+
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class InterstellarTrade {
+  
+  public void solve() throws IOException {
+    int t = nextInt();
+    for (int i = 0; i < t; i++) {
+      int n = nextInt();
+      long[] p = new long[n];
+      for (int x = 0; x < n; x++) {
+        p[x] = nextLong();
+      }
+      Arrays.sort(p);
+      long max = p[p.length - 1];
+      long min = p[0];
+      
+      long maxmin = Long.MAX_VALUE;
+      
+      for (int x = 0; x < p.length - 1; x++) {
+        long first = p[x] - min;
+        long second = max - p[x + 1];
+        long cand = Math.max(first, second);
+        if (cand < maxmin) {
+          maxmin = cand;
+        }
+      }
+      
+      System.out.println(maxmin);
+    }
+  }
+
+  public BufferedReader br;
+  public StringTokenizer st;
+  public PrintWriter out;
+
+  public String nextToken() throws IOException {
+    while (st == null || !st.hasMoreTokens()) {
+      st = new StringTokenizer(br.readLine());
+    }
+
+    return st.nextToken();
+  }
+
+  public String nextLine() throws IOException {
+    return br.readLine();
+  }
+
+  public int nextInt() throws IOException {
+    return Integer.parseInt(nextToken());
+  }
+
+  public long nextLong() throws IOException {
+    return Long.parseLong(nextToken());
+  }
+
+  public double nextDouble() throws IOException {
+    return Double.parseDouble(nextToken());
+  }
+
+  public void run() throws IOException {
+    boolean oj = System.getProperty("ONLINE_JUDGE") != null;
+    oj = true;
+    br = new BufferedReader(
+        new InputStreamReader(oj ? System.in : new FileInputStream("input.txt")));
+    out = new PrintWriter(oj ? System.out : new FileOutputStream("output.txt"));
+    solve();
+    out.close();
+  }
+
+  public static void main(String[] args) throws IOException {
+    new InterstellarTrade().run();
+  }
+}

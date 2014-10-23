@@ -6,29 +6,80 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 public class Helper {
   public void solve() throws IOException {
-    String[] result = new String[15504];
-    int[] val = new int[6];
-    val[5] = 15;
-    result[0] = toString(val);
-    for (int x = 1; x < 15504; x++) {
-      for (int y = 5; y >= 0; y--) {
-        if (val[y] != 0) {
-          val[y - 1]++;
-          val[y]--;
-          int tot = 0;
-          for (int z = y; z < 6; z++) {
-            tot += val[z];
-            val[z] = 0;
-          }
-          val[5] = tot;
-          break;
+    int[] a = {2, 1};
+    
+    Random random = new Random(System.nanoTime());
+    
+    int temp;
+    long mcount = 0;
+    long ccount = 0;
+    double times = 10000000;
+    for (int x = 0; x < times; x++) {
+      int[] m = a.clone();
+      
+      while(!sorted(m)) {
+        mcount++;
+        int i = random.nextInt(a.length);
+        int j = random.nextInt(a.length);
+        if (m[Math.min(i, j)] > m[Math.max(i, j)]) {
+          temp = m[i];
+          m[i] = m[j];
+          m[j] = temp;
         }
       }
-      result[x] = toString(val);
+      
+      int[] c = a.clone();
+      
+      while(!sorted(c)) {
+        ccount++;
+        int i = random.nextInt(a.length - 1);
+        int j = i + 1;
+        if (c[Math.min(i, j)] > c[Math.max(i, j)]) {
+          temp = c[i];
+          c[i] = c[j];
+          c[j] = temp;
+        }
+      }
+    }
+    System.out.println(mcount / times + " " + ccount / times);
+  }
+  
+  public boolean sorted(int[] a) {
+    for (int x = 0; x < a.length - 1; x++) {
+      if (a[x] > a[x + 1])
+        return false;
+    }
+    return true;
+  }
+  
+  public List<Integer> perfectDivisors(int n) {
+    List<Integer> divisors = new ArrayList<Integer>();
+    divisors.add(1);
+    int sum = 1;
+    for (int x = 2; x <= Math.sqrt(n); x++) {
+      if (n % x == 0) {
+        sum += x;
+        divisors.add(x);
+        if (x != Math.sqrt(n)) {
+          divisors.add(n / x);
+          sum += n / x;
+        }
+      }
+    }
+    //System.out.println(n + " " + sum);
+    if (sum == n) {
+      Collections.sort(divisors);
+      return divisors;
+    } else {
+      return null;
     }
   }
 
