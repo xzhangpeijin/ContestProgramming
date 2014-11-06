@@ -1,4 +1,4 @@
-package contests.completed.codeforces;
+package contests.completed.icpc;
 
 
 import java.io.BufferedReader;

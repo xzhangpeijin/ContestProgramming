@@ -1,4 +1,4 @@
-package contests.completed.codeforces;
+package contests.completed.icpc;
 
 
 import java.io.BufferedReader;
@@ -7,28 +7,32 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class OpeningCeremony {
+public class DiceGame {
   
   public void solve() throws IOException {
-    int n = nextInt();
-    int[] heights = new int[n];
-    for (int x = 0; x < n; x++) {
-      heights[x] = nextInt();
+    int a1 = nextInt();
+    int b1 = nextInt();
+    int a2 = nextInt();
+    int b2 = nextInt();
+    
+    double gunnar = (double)(a1 + b1) / 2 + (double)(a2 + b2) / 2;
+    
+    a1 = nextInt();
+    b1 = nextInt();
+    a2 = nextInt();
+    b2 = nextInt();
+    
+    double emma = (double)(a1 + b1) / 2 + (double)(a2 + b2) / 2;
+    
+    if (gunnar > emma) {
+      System.out.println("Gunnar");
+    } else if (gunnar == emma) {
+      System.out.println("Tie");
+    } else {
+      System.out.println("Emma");
     }
-    Arrays.sort(heights);
-    int min = n;
-    for (int x = n; x >= 0; x--) {
-      int charges = n - x;
-      if (x > 0)
-        charges += heights[x - 1];
-      if (charges < min) {
-        min = charges;
-      }
-    }
-    System.out.println(min);
   }
 
   public BufferedReader br;
@@ -70,6 +74,6 @@ public class OpeningCeremony {
   }
 
   public static void main(String[] args) throws IOException {
-    new OpeningCeremony().run();
+    new DiceGame().run();
   }
 }
