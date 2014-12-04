@@ -6,18 +6,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 public class Helper {
   public void solve() throws IOException {
-    BigInteger mod = BigInteger.valueOf(1000000007L);
-    for (int x = 1; x <= 5000; x++) {
-      BigInteger val = BigInteger.valueOf(x);
-      System.out.println(val.modInverse(mod));
+    Random a = new Random(System.currentTimeMillis());
+    for (int x = 0; x < 99; x++) {
+      System.out.print(100);
+      switch (a.nextInt(4)) {
+      case 0: System.out.println(" L"); break;
+      case 1: System.out.println(" R"); break;
+      case 2: System.out.println(" U"); break;
+      case 3: System.out.println(" D"); break;
+      }
     }
   }
   
