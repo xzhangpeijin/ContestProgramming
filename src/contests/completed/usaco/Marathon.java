@@ -30,7 +30,7 @@ public class Marathon {
     private int maxsize;
     private int height;
 
-    private  final int STARTINDEX = 0; 
+    private  final int STARTINDEX; 
     private  final int ENDINDEX;
     private  final int ROOT = 0;
 
@@ -39,6 +39,7 @@ public class Marathon {
       height = (int)(Math.ceil(Math.log(size) /  Math.log(2)));
       maxsize = 2 * (int) Math.pow(2, height) - 1;
       tree = new int[maxsize];
+      STARTINDEX = 0;
       ENDINDEX = size - 1; 
     }
 
@@ -203,7 +204,7 @@ public class Marathon {
       {
         return;
       }
-      tree[current] = tree[current] + update;
+      tree[current] = Math.max(tree[current], update);
       if (startIndex != endIndex)
       {
         int mid = mid(startIndex, endIndex);
@@ -235,14 +236,13 @@ public class Marathon {
       }
     }
     for (int x = 1; x < n - 1; x++) {
-      skips[x] = distmap[x + 1] - distmap[x - 1] - points[x + 1].dist(points[x - 1]);
+      skips[x] = distmap[x + 1] + distmap[x] - points[x + 1].dist(points[x - 1]);
     }
     
     SegmentTree distance = new SegmentTree(n);
     distance.constructSegmentTree(distmap);
     MaxTree skip = new MaxTree(n);
     skip.constructSegmentTree(skips);
-    
     
     for (int x = 0; x < q; x++) {
       String type = nextToken();
