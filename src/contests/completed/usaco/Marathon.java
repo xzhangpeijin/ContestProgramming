@@ -260,7 +260,7 @@ public class Marathon {
         int i = nextInt() - 1;
         int j = nextInt() - 1;
         out.println(distance.getSum(i, j) - skip.getSum(i, j));
-      }
+      } 
     }
   }
 
