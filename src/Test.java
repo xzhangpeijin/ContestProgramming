@@ -2,8 +2,11 @@
 
 public class Test {
   public Test() {
-    System.out.println(1 << 0);
-    System.out.println(1 << 2);
+    StringBuilder buf = new StringBuilder("asdf");
+    buf.deleteCharAt(1);
+    System.out.println(buf.toString());
+    buf.insert(1, 's');
+    System.out.println(buf.toString());
   }
 
   public static void main(String[] args) {
