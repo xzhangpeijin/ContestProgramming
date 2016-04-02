@@ -1,3 +1,4 @@
+package contests.completed.misc;
 
 
 import java.io.BufferedReader;
@@ -7,10 +8,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
+/*
+ * I'm 99% sure this code is correct. This should get full credit but it fails 
+ * due to inconsistent ordering in duplicate solutions in the problem.
+ */
+
 public class MovieTheatre {
+  static final double EPSILON = 1e-8;
+
   static class Node {
     List<Integer> path;
     double value;
@@ -49,10 +59,30 @@ public class MovieTheatre {
   
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < n; j++) {
-        graph[i][j] = (rel[i][j] + rel[j][i]);
-        System.out.print(graph[i][j] + " ");
+        graph[i][j] = (rel[i][j] + rel[j][i]) / 
+            (Math.abs(rel[i][j]) + Math.abs(rel[j][i]));
       }
-      System.out.println();
+    }
+    
+    boolean dup = false;
+    check: {
+        for (int i = 0; i < n; i++) {
+            Set<Double> values = new HashSet<Double>();
+            for (int j = 0; j < n; j++) {
+                if (i != j && values.contains(graph[i][j])) {
+                    dup = true;
+                    break check;
+                }
+                values.add(graph[i][j]);
+            }
+        }
+    }
+    if (dup) {
+      for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            graph[i][j] += (rel[i][j] + rel[j][i]) * EPSILON;
+        }
+      }
     }
         
     List<Node> search = new ArrayList<Node>();

@@ -1,3 +1,4 @@
+package contests.completed.misc;
 
 
 import java.io.BufferedReader;
