@@ -1,4 +1,4 @@
-package contests.completed.misc;
+package contests.completed.google;
 
 
 import java.io.BufferedReader;
@@ -9,10 +9,22 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
-public class PickProblems {
+public class LastWord {
   
   public void solve() throws IOException {
-
+    int T = nextInt();
+    for (int t = 1; t <= T; t++) {
+      String S = nextLine();
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < S.length(); i++) {
+        if (i == 0 || Character.compare(S.charAt(i), sb.charAt(0)) < 0) {
+          sb.append(S.charAt(i));
+        } else {
+          sb.insert(0, S.charAt(i));
+        }
+      }
+      out.format("Case #%d: %s\n", t, sb.toString());
+    }
   }
 
   public BufferedReader br;
@@ -54,6 +66,6 @@ public class PickProblems {
   }
 
   public static void main(String[] args) throws IOException {
-    new PickProblems().run();
+    new LastWord().run();
   }
 }
